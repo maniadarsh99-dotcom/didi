@@ -1,0 +1,1424 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Didi! 🎉</title>
+
+    <style>
+
+        /* =========================================================
+           YOUR ORIGINAL CSS
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            color: #333;
+            text-align: center;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+
+        header {
+            padding: 50px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: #d63384;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        p.subtitle {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .message-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            text-align: left;
+            position: relative;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .message-card h2 {
+            color: #d63384;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .gallery-title {
+            font-size: 2rem;
+            color: #d63384;
+            margin-bottom: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            background: #fff;
+            padding: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .caption {
+            margin-top: 10px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .heart {
+            position: fixed;
+            color: #ff4757;
+            font-size: 20px;
+            animation: float 5s linear infinite;
+            bottom: -20px;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .btn-surprise {
+            background-color: #d63384;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(214, 51, 132, 0.4);
+            transition: background 0.3s ease;
+        }
+
+        .btn-surprise:hover {
+            background-color: #b02a6b;
+        }
+
+        #hidden-message {
+            display: none;
+            margin-top: 20px;
+            font-size: 1.3rem;
+            color: #d63384;
+            font-weight: bold;
+        }
+
+
+        /* =========================================================
+           NEW FEATURE 1
+           OPENING SURPRISE POPUP
+        ========================================================= */
+
+        #birthday-popup {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,.2), transparent 25%),
+                linear-gradient(135deg, #ff758c, #ff7eb3, #c471ed);
+            z-index: 9999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            transition:
+                opacity .8s ease,
+                visibility .8s ease;
+        }
+
+        #birthday-popup.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .popup-card {
+            width: min(430px, 95vw);
+            background: rgba(255,255,255,.95);
+            padding: 25px;
+            border-radius: 30px;
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,.35);
+
+            position: relative;
+
+            animation: popupAppear 1s ease;
+        }
+
+        @keyframes popupAppear {
+            from {
+                transform: scale(.5) rotate(-8deg);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        .popup-card::before {
+            content: "🎀";
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 45px;
+        }
+
+        .popup-photo {
+            width: 100%;
+            height: 330px;
+            object-fit: cover;
+            border-radius: 22px;
+            margin-bottom: 20px;
+        }
+
+        .popup-card h2 {
+            color: #d63384;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .popup-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .open-surprise {
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #d63384, #ff4f81);
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+
+            box-shadow: 0 8px 20px rgba(214,51,132,.35);
+
+            transition: .3s;
+        }
+
+        .open-surprise:hover {
+            transform: translateY(-3px) scale(1.03);
+        }
+
+
+        /* =========================================================
+           NEW FEATURE 2
+           CELEBRATION BANNER
+        ========================================================= */
+
+        #celebration-message {
+            display: none;
+            padding: 35px 20px;
+            margin: 20px auto 35px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.75),
+                    rgba(255,255,255,.35)
+                );
+
+            border-radius: 30px;
+
+            box-shadow: 0 15px 40px rgba(0,0,0,.12);
+
+            animation: celebrationIn 1.2s ease;
+        }
+
+        #celebration-message.show {
+            display: block;
+        }
+
+        #celebration-message h2 {
+            font-size: 2.8rem;
+            color: #d63384;
+            margin-bottom: 10px;
+        }
+
+        #celebration-message p {
+            font-size: 1.15rem;
+            color: #666;
+        }
+
+        @keyframes celebrationIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+
+        /* =========================================================
+           NEW FEATURE 3
+           CONFETTI
+        ========================================================= */
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 16px;
+
+            top: -20px;
+
+            z-index: 10000;
+            pointer-events: none;
+
+            animation: confettiFall 4s linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translateY(110vh)
+                    rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+
+        /* =========================================================
+           NEW FEATURE 4
+           VIDEO SECTION
+        ========================================================= */
+
+        .video-section {
+            margin: 60px auto;
+        }
+
+        .video-card {
+            background: rgba(255,255,255,.75);
+            padding: 20px;
+            border-radius: 25px;
+
+            box-shadow:
+                0 15px 35px rgba(0,0,0,.12);
+
+            backdrop-filter: blur(10px);
+        }
+
+        .video-card video {
+            width: 100%;
+            max-height: 500px;
+
+            object-fit: cover;
+
+            border-radius: 18px;
+
+            display: block;
+        }
+
+        .video-caption {
+            padding: 20px 10px 5px;
+        }
+
+        .video-caption h3 {
+            color: #d63384;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .video-caption p {
+            color: #666;
+        }
+
+
+        /* =========================================================
+           NEW FEATURE 5
+           HANGING PHOTO GALLERY
+        ========================================================= */
+
+        .hanging-gallery-section {
+            margin: 70px auto;
+            padding: 20px 0;
+        }
+
+        .hanging-gallery {
+            position: relative;
+
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 55px 30px;
+
+            padding: 60px 10px 20px;
+        }
+
+        .hanging-gallery::before {
+            content: "";
+
+            position: absolute;
+
+            top: 25px;
+            left: 2%;
+            right: 2%;
+
+            height: 5px;
+
+            background: #8b5e3c;
+
+            border-radius: 10px;
+
+            box-shadow: 0 4px 5px rgba(0,0,0,.15);
+        }
+
+        .hanging-photo {
+            width: 190px;
+
+            background: white;
+
+            padding: 10px 10px 15px;
+
+            position: relative;
+
+            box-shadow:
+                0 10px 20px rgba(0,0,0,.18);
+
+            transform: rotate(-4deg);
+
+            transition: .4s;
+
+            animation: swing 3s ease-in-out infinite;
+        }
+
+        .hanging-photo:nth-child(even) {
+            transform: rotate(4deg);
+            animation-delay: .5s;
+        }
+
+        .hanging-photo:nth-child(3) {
+            transform: rotate(-2deg);
+            animation-delay: 1s;
+        }
+
+        .hanging-photo:hover {
+            transform:
+                rotate(0)
+                scale(1.08)
+                translateY(-8px);
+
+            z-index: 5;
+        }
+
+        .hanging-photo::before {
+            content: "📌";
+
+            position: absolute;
+
+            top: -32px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            font-size: 25px;
+        }
+
+        .hanging-photo img {
+            width: 100%;
+            height: 190px;
+
+            object-fit: cover;
+        }
+
+        .hanging-photo p {
+            margin-top: 10px;
+
+            font-family: cursive;
+            color: #555;
+        }
+
+        @keyframes swing {
+            0%,100% {
+                rotate: -2deg;
+            }
+
+            50% {
+                rotate: 2deg;
+            }
+        }
+
+
+        /* =========================================================
+           NEW FEATURE 6
+           MAKE A WISH
+        ========================================================= */
+
+        .wish-section {
+            margin: 70px auto;
+            padding: 35px 20px;
+
+            background: rgba(255,255,255,.7);
+
+            border-radius: 30px;
+
+            box-shadow: 0 15px 35px rgba(0,0,0,.1);
+        }
+
+        .wish-section h2 {
+            color: #d63384;
+            margin-bottom: 12px;
+        }
+
+        .wish-btn {
+            margin-top: 20px;
+
+            border: none;
+            padding: 15px 30px;
+
+            border-radius: 50px;
+
+            background: #ff758c;
+
+            color: white;
+
+            font-size: 1rem;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: .3s;
+        }
+
+        .wish-btn:hover {
+            transform: scale(1.05);
+        }
+
+        #wish-result {
+            display: none;
+
+            margin-top: 20px;
+
+            font-size: 1.2rem;
+
+            color: #d63384;
+
+            font-weight: bold;
+
+            animation: wishAppear .8s ease;
+        }
+
+        @keyframes wishAppear {
+            from {
+                opacity: 0;
+                transform: scale(.5);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+
+        /* =========================================================
+           NEW FEATURE 7
+           FINAL LOVE NOTE
+        ========================================================= */
+
+        .final-note {
+            margin: 70px auto 20px;
+
+            padding: 35px 25px;
+
+            max-width: 750px;
+
+            background: white;
+
+            border-radius: 30px;
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,.12);
+        }
+
+        .final-note .big-heart {
+            font-size: 3rem;
+
+            animation:
+                heartbeat 1.3s infinite;
+        }
+
+        .final-note h2 {
+            color: #d63384;
+            margin: 12px 0;
+        }
+
+        .final-note p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        @keyframes heartbeat {
+            0%,100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 600px) {
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            #celebration-message h2 {
+                font-size: 2rem;
+            }
+
+            .popup-photo {
+                height: 280px;
+            }
+
+            .hanging-photo {
+                width: 155px;
+            }
+
+            .hanging-photo img {
+                height: 155px;
+            }
+
+            .hanging-gallery {
+                gap: 50px 15px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         OPENING SURPRISE POPUP
+    ========================================================= -->
+
+    <div id="birthday-popup">
+
+        <div class="popup-card">
+
+            <img
+                src="images/main.jpg"
+                class="popup-photo"
+                alt="Beautiful photo of Didi"
+            >
+
+            <h2>Wait... Someone's Birthday? 👀🎂</h2>
+
+            <p>
+                There's someone incredibly special who deserves
+                all the happiness, laughter and love in the world today...
+                ❤️
+            </p>
+
+            <button
+                class="open-surprise"
+                onclick="openBirthdaySurprise()"
+            >
+                Open Your Surprise 💝
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         YOUR ORIGINAL HEADER
+    ========================================================= -->
+
+    <header>
+
+        <h1>Happy Birthday, Didi! ✨</h1>
+
+        <p class="subtitle">
+            Wishing the sweetest, most amazing sister a wonderful day!
+        </p>
+
+    </header>
+
+
+    <div class="container">
+
+
+        <!-- =====================================================
+             NEW CELEBRATION MESSAGE
+        ===================================================== -->
+
+        <div id="celebration-message">
+
+            <h2>🎉 HAPPY BIRTHDAY DIDI! 🎉</h2>
+
+            <p>
+                🎂✨ Happy Birthday meri pyaari Didi! ❤️
+Tum sirf meri didi nahi ho,tum mere liye mera sbb kuch ho. tum meri sabse special person ho. 
+Main shayad har baar express nahi kar pata, lekin I’m genuinely lucky to have you as my sister. ❤️
+Meri dua hai ki tumhari life hamesha khushiyon, success, se bhari rahe. Jo bhi tum dil se chaaho, woh tumhe mile. 🌸✨
+Keep smiling, keep shining and always stay the amazing person you are. 👑💫
+
+🎉 Happy Birthday Didi! 🎂❤️
+Love you always! 🫂💖. 💕
+            </p>
+
+            <p style="margin-top:12px;">
+                May your smile always be brighter than the candles
+                on your cake! 🥰🎂✨
+            </p>
+
+        </div>
+
+
+        <!-- =====================================================
+             YOUR ORIGINAL BIRTHDAY MESSAGE
+        ===================================================== -->
+
+        <div class="message-card">
+
+            <h2>Dearest Didi 💕</h2>
+
+            <p>
+                Happy Birthday to you didi
+                On your special day, I want to thank you for always standing
+                by me, sharing secrets, and making life so much brighter.
+            </p>
+
+            <br>
+
+            <p>
+                May your year ahead be filled with endless laughter,
+                boundless happiness, and success in everything you do.
+                You deserve all the joy in the world today and every day!
+            </p>
+
+        </div>
+
+
+        <!-- =====================================================
+             NEW VIDEO SECTION
+        ===================================================== -->
+
+        <section class="video-section">
+
+            <h2 class="gallery-title">
+                🎬 A Little Video For You 💕
+            </h2>
+
+            <div class="video-card">
+
+                <video
+                    controls
+                    playsinline
+                    preload="metadata"
+                >
+
+                    <source
+                        src="video/vid 3.mp4"
+                        type="video/mp4"
+                    >
+
+                    Your browser does not support the video element.
+
+                </video>
+
+                <div class="video-caption">
+
+                    <h3>
+                        A Few Memories, One Special Person ❤️
+                    </h3>
+
+                    <p>
+                        Every picture has a story...
+                        and every story is better because you're in it. ✨
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             YOUR ORIGINAL PHOTO GALLERY
+        ===================================================== -->
+
+        <h2 class="gallery-title">
+            Memories With You 📸
+        </h2>
+
+        <div class="gallery">
+
+            <div class="gallery-item">
+
+                <img
+                    src="images/pic1.jpg"
+                    alt="Didi Photo 1"
+                >
+
+                <div class="caption">
+                    The Best Moments ❤️
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="images/pic2.jpg"
+                    alt="Didi Photo 2"
+                >
+
+                <div class="caption">
+                    Always Smiling 😊
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="images/pic 6 (1).jpg"
+                    alt="Didi Photo 3"
+                >
+
+                <div class="caption">
+                    Sister Goals 👯‍♀️
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="images/pic 6 (2).jpg"
+                    alt="Didi Photo 4"
+                >
+
+                <div class="caption">
+                    Unforgettable Days ✨
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <h2 class="gallery-title">
+            More Beautiful Memories 📸
+        </h2>
+
+        <div class="gallery">
+
+            <div class="gallery-item">
+
+                <img
+                    src="images/pic 6 (3).jpg"
+                    alt="Didi Photo 5"
+                >
+
+                <div class="caption">
+                    The Best Moments ❤️
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="images/pic 6 (4).jpg"
+                    alt="Didi Photo 6"
+                >
+
+                <div class="caption">
+                    Always Smiling 😊
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="images/pic 6 (5).jpg"
+                    alt="Didi Photo 7"
+                >
+
+                <div class="caption">
+                    Sister Goals 👯‍♀️
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="images/pic 6 (6).jpg"
+                    alt="Didi Photo 8"
+                >
+
+                <div class="caption">
+                    Unforgettable Days ✨
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <h2 class="gallery-title">
+            And The Memories Continue... 💖
+        </h2>
+
+        <div class="gallery">
+
+            <div class="gallery-item">
+
+                <img
+                    src="images/pic 6 (7).jpg"
+                    alt="Didi Photo 9"
+                >
+
+                <div class="caption">
+                    The Best Moments ❤️
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="images/pic3.jpg"
+                    alt="Didi Photo 10"
+                >
+
+                <div class="caption">
+                    Always Smiling 😊
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="images/pic4.jpg"
+                    alt="Didi Photo 11"
+                >
+
+                <div class="caption">
+                    Sister Goals 👯‍♀️
+                </div>
+
+            </div>
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="images/pic5.jpg"
+                    alt="Didi Photo 12"
+                >
+
+                <div class="caption">
+                    Unforgettable Days ✨
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             NEW HANGING PHOTO GALLERY
+        ===================================================== -->
+
+        <section class="hanging-gallery-section">
+
+            <h2 class="gallery-title">
+                🧡 Little Memories Hanging From My Heart 🧡
+            </h2>
+
+            <div class="hanging-gallery">
+
+                <div class="hanging-photo">
+
+                    <img
+                        src="images/main.jpg"
+                        alt="Memory"
+                    >
+
+                    <p>
+                        My favourite person ❤️
+                    </p>
+
+                </div>
+
+
+                <div class="hanging-photo">
+
+                    <img
+                        src="images/pic 6 (3).jpg"
+                        alt="Memory"
+                    >
+
+                    <p>
+                        Always there for me 🤍
+                    </p>
+
+                </div>
+
+
+                <div class="hanging-photo">
+
+                    <img
+                        src="images/pic4.jpg"
+                        alt="Memory"
+                    >
+
+                    <p>
+                        Endless laughter 😂
+                    </p>
+
+                </div>
+
+
+                <div class="hanging-photo">
+
+                    <img
+                        src="images/pic 6 (6).jpg"
+                        alt="Memory"
+                    >
+
+                    <p>
+                        Forever special ✨
+                    </p>
+
+                </div>
+
+
+                <div class="hanging-photo">
+
+                    <img
+                        src="images/pic5.jpg"
+                        alt="Memory"
+                    >
+
+                    <p>
+                        Beautiful memories 💕
+                    </p>
+
+                </div>
+
+
+                <div class="hanging-photo">
+
+                    <img
+                        src="images/pic2.jpg"
+                        alt="Memory"
+                    >
+
+                    <p>
+                        That smile! 🥰
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             MAKE A WISH
+        ===================================================== -->
+
+        <section class="wish-section">
+
+            <h2>
+                🎂 Make A Birthday Wish 🎂
+            </h2>
+
+            <p>
+                Close your eyes for a second...
+                think of something beautiful...
+                and make a wish. ✨
+            </p>
+
+            <button
+                class="wish-btn"
+                onclick="makeWish()"
+            >
+                ✨ Make My Wish ✨
+            </button>
+
+            <div id="wish-result">
+
+                🌟 May your wish come true,
+                Didi! 🌟
+
+                <br>
+
+                And may life give you
+                a thousand more reasons to smile. ❤️
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ORIGINAL SURPRISE BUTTON
+        ===================================================== -->
+
+        <button
+            class="btn-surprise"
+            onclick="showSurprise()"
+        >
+            Click for a Special Message!
+        </button>
+
+
+        <div id="hidden-message">
+
+            🎁 You're not just my sister,
+            you're my superhero!
+            Love you so much, Didi! 💖
+
+        </div>
+
+
+        <!-- =====================================================
+             FINAL LOVE NOTE
+        ===================================================== -->
+
+        <div class="final-note">
+
+            <div class="big-heart">
+                ❤️
+            </div>
+
+            <h2>
+                One Last Thing...
+            </h2>
+
+            <p>
+
+                No matter how much we grow up,
+                you'll always be my Didi —
+                the person I can annoy,
+                argue with,
+                laugh with,
+                and count on. 🥹
+
+                <br><br>
+
+                Thank you for being one of the most
+                beautiful parts of my life.
+
+                <br><br>
+
+                I hope this year brings you everything
+                your heart has been wishing for.
+
+                <br><br>
+                  Aur sorry tumko mere jaisa bhai mila..jispe tum itna rely nhi krr skti iss baar..mai bss itna hi krr paya lekin next time tumko gift dunga accha sa abhi issi se kaam chla lo.
+
+                <br><br>
+                <strong>
+                    Happy Birthday once again, Didi! 🎂💖
+                </strong>
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script>
+
+
+        /* =====================================================
+           ORIGINAL SURPRISE BUTTON
+        ===================================================== */
+
+        function showSurprise() {
+
+            const msg =
+                document.getElementById('hidden-message');
+
+            msg.style.display =
+                msg.style.display === 'block'
+                    ? 'none'
+                    : 'block';
+
+        }
+
+
+        /* =====================================================
+           OPEN BIRTHDAY SURPRISE
+        ===================================================== */
+
+        function openBirthdaySurprise() {
+
+            const popup =
+                document.getElementById('birthday-popup');
+
+            popup.classList.add('hide');
+
+
+            /* Show celebration */
+
+            setTimeout(() => {
+
+                document
+                    .getElementById('celebration-message')
+                    .classList.add('show');
+
+            }, 600);
+
+
+            /* Launch confetti */
+
+            launchConfetti();
+
+
+            /* Extra heart burst */
+
+            for (let i = 0; i < 15; i++) {
+
+                setTimeout(() => {
+
+                    createHeart();
+
+                }, i * 100);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CONFETTI
+        ===================================================== */
+
+        function launchConfetti() {
+
+            const pieces = 90;
+
+            for (let i = 0; i < pieces; i++) {
+
+                const confetti =
+                    document.createElement('div');
+
+                confetti.className = 'confetti';
+
+                confetti.style.left =
+                    Math.random() * 100 + 'vw';
+
+                confetti.style.animationDuration =
+                    (Math.random() * 2 + 3) + 's';
+
+                confetti.style.animationDelay =
+                    Math.random() * 1.5 + 's';
+
+                confetti.style.background =
+                    [
+                        '#ff4d6d',
+                        '#ffd166',
+                        '#06d6a0',
+                        '#4cc9f0',
+                        '#c77dff',
+                        '#ffffff'
+                    ][
+                        Math.floor(Math.random() * 6)
+                    ];
+
+                confetti.style.transform =
+                    `rotate(${Math.random() * 360}deg)`;
+
+                document.body.appendChild(confetti);
+
+
+                setTimeout(() => {
+
+                    confetti.remove();
+
+                }, 6000);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           MAKE A WISH
+        ===================================================== */
+
+        function makeWish() {
+
+            const result =
+                document.getElementById('wish-result');
+
+            result.style.display = 'block';
+
+            launchConfetti();
+
+            for (let i = 0; i < 10; i++) {
+
+                setTimeout(() => {
+
+                    createHeart();
+
+                }, i * 120);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           FLOATING HEARTS
+        ===================================================== */
+
+        function createHeart() {
+
+            const heart =
+                document.createElement('div');
+
+            heart.classList.add('heart');
+
+            heart.innerHTML = '❤️';
+
+            heart.style.left =
+                Math.random() * 100 + 'vw';
+
+            heart.style.animationDuration =
+                Math.random() * 3 + 2 + 's';
+
+            document.body.appendChild(heart);
+
+
+            setTimeout(() => {
+
+                heart.remove();
+
+            }, 5000);
+
+        }
+
+
+        setInterval(createHeart, 500);
+
+
+    </script>
+
+
+</body>
+</html>
+```
